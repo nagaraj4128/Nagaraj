@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<style type="text/css">
+	body{
+		background:#363636;
+		margin:0;
+	}
+.options{
+background-color: red;
+width:30%;
+padding-top:30%;
+margin:1.66%;
+border-radius:15%;
+transition: background-color 0.7s;
+}	
+h1{
+background: #ee9ff2;
+margin:0;
+color:white;
+font-weight: normal;
+text-align:center;
+transition: background-color 0.7s;
+
+}
+.container{
+	width:50%;
+}
+.menubar{
+	text-align:center;
+	background-color: white;
+}
+.menubar button{
+	border:none;
+	text-align: center;
+	font-weight:normal;
+	letter-spacing: 1px;
+	color: #ee9ff2;
+	background:none;
+	outline:none;
+	transition: all 0.5s;
+}
+.menubar span{
+	padding:0 5%;
+	padding-right:18%;
+	width:10%;
+
+
+}
+.menubar .active{
+	transition: all 0.5s;
+	background-color:#ee9ff2;
+	color:white;
+	outline:none;
+}
+.menubar button:hover{
+	background-color:#ee9ff2;
+	color:white;
+	outline:none;
+}
+.menubar button: focus{
+	outline :none;
+}
+.red{
+	color:red;
+}
+.green{
+	color:#47d145;
+}
+.blue{
+	color:blue;
+}
+#message{
+	color:#cd6ad8;
+}
+#howtoplay{
+	padding:0 1%;
+}
+.modal-dialog .modal-header{
+	background-color:#ee9ff2;
+	color:white; 
+}
+.modal-dialog .modal-body{
+	color:#ee9ff2;
+}
+.modal-footer .btn-secondary{
+	background-color:#ee9ff2; 
+}
+</style>
+    <title>RGB guess</title>
+  </head>
+  <body>
+   <h1>GUESS THE <br> <span id="colordisplay">RGB</span><br> GAME</h1>
+ <div class="menubar mb-4"> 
+<button id="howtoplay" onclick="this.blur();" type="button" data-toggle="modal" data-target="#exampleModal">HOW TO PLAY </button>
+<button id="changecolor">CHANGE COLOR</button>
+<span id="message"></span>
+<button id="Easy">EASY</button>
+<button id="Hard" class="active">HARD</button>
+ </div>
+<!-- <select id="selectmode" name="choice" value="">
+<option>Hard</option>	
+<option>Easy</option>	
+</select> -->
+<div id="options" class="container">
+<!-- <div class="row">
+   <div class="options"></div>
+   <div class="options"></div>
+   <div class="options"></div>
+   </div>
+  <div class="row">
+   <div class="options"></div>
+   <div class="options"></div>
+   <div class="options"></div>
+</div> -->
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">HOW TO PLAY</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       The proportion of the mixing of the three primary colors, red, green and blue will be shown on the topbar.<br><br> You need to guess which color the proportion matches with and click on an appropriate box from the options displayed below.<br><br> Only ONE color will be the correct answer.<br><br>Good Luck!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="$('#howtoplay').blur();" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    	var gameOver=false;
+    	var boxes=6;
+    	function changeback(){
+  $("h1").css("background-color","#ee9ff2");
+document.getElementById("changecolor").innerHTML="CHANGE COLOR";
+document.getElementById("message").innerHTML="";
+    	}
+game();
+function game(){
+    	var colors=new Array();
+    function getRandom() {
+    return Math.floor(Math.random() * (255 - 0) + 0);
+}	
+function getRand() {
+    return Math.floor(Math.random() * ((boxes) - 0) + 0);
+}	
+if(boxes==3)
+$("#options").html('<div class="row"><div class="options"></div><div class="options"></div><div class="options"></div></div>');
+else{
+$("#options").html('<div class="row"><div class="options"></div><div class="options"></div><div class="options"></div></div>'+'<div class="row"><div class="options"></div><div class="options"></div><div class="options"></div></div>');	
+}
+colors[0]=getRandom();
+colors[1]=getRandom();
+colors[2]=getRandom();
+var selected=getRand();
+console.log(selected);
+
+//console.log(getRandom(),getRand());
+for(var i=0;i<boxes;i++){
+if(i!=selected)
+document.getElementsByClassName("options")[i].style.backgroundColor="rgb("+getRandom()+","+getRandom()+","+getRandom()+")";
+else document.getElementsByClassName("options")[i].style.backgroundColor="rgb("+colors[0]+","+colors[1]+","+colors[2]+")";
+}
+
+$("#colordisplay").html("<span class='red'>R</span><span class='green'>G</span><span class='blue'>B</span>( <span class='red'>"+colors[0]+"</span> , <span class='green'>"+colors[1]+"</span> ,<span class='blue'> "+colors[2]+"</span> )");
+for(var i=0;i<boxes;i++){
+if(i!=selected)
+document.getElementsByClassName("options")[i].addEventListener("click",function(){
+
+if(!gameOver)
+{document.getElementById("message").style.color=this.style.backgroundColor;
+$(this).css("backgroundColor","transparent");
+document.getElementById("message").innerHTML="TRY AGAIN?";
+}
+});
+else if(i==selected){ 
+document.getElementsByClassName("options")[i].addEventListener("click",function(){
+document.getElementById("message").style.color=this.style.backgroundColor;
+$(".options").css("background-color","rgb("+colors[0]+","+colors[1]+","+colors[2]+")");
+$("h1").css("background-color","rgb("+colors[0]+","+colors[1]+","+colors[2]+")");
+document.getElementById("changecolor").innerHTML="PLAY AGAIN?";
+document.getElementById("message").innerHTML="YAY! CORRECT!";
+});
+	}
+}
+
+}
+
+document.getElementById("Hard").addEventListener("click",function(){
+boxes=6;
+document.getElementById("Easy").classList.remove("active");
+document.getElementById("Hard").classList.add("active");
+gameOver=false;
+changeback();
+game();
+});
+document.getElementById("Easy").addEventListener("click",function(){
+boxes=3;
+document.getElementById("Easy").classList.add("active");
+document.getElementById("Hard").classList.remove("active");
+changeback();
+gameOver=false;
+game();
+});
+document.getElementById("changecolor").addEventListener("click",function(){
+gameOver=false;
+changeback();
+game();
+
+});
+
+setInterval(function(){
+	$('#howtoplay').blur();
+},100);
+    </script>
+  </body>
+</html>
